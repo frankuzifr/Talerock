@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21dcde5813d74748815b0b968fa4e885, type: 3}
   m_Name: Level_1
   m_EditorClassIdentifier: 
-  timeForCheck: 0
-  timeForAnswer: 0
+  timeForCheck: 5
+  timeForAnswer: 30
   combinationColors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0.15496778, g: 1, b: 0, a: 1}
@@ -21,11 +21,11 @@ MonoBehaviour:
   - {r: 1, g: 0.98475426, b: 0, a: 1}
   - {r: 0, g: 1, b: 0.9301295, a: 1}
   optionsColors:
-  - {r: 1, g: 0.0047169924, b: 0.0047169924, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0.15686275, g: 1, b: 0, a: 1}
-  - {r: 0.46625423, g: 0, b: 1, a: 1}
-  - {r: 0.148332, g: 1, b: 0, a: 1}
-  - {r: 0.6290765, g: 0.764151, b: 0, a: 1}
+  - {r: 0, g: 0.050980393, b: 1, a: 1}
+  - {r: 1, g: 0.9843137, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.92941177, a: 1}
   - {r: 0.4666667, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 0.92941177, a: 1}
   - {r: 1, g: 0.08018869, b: 0.95004433, a: 1}

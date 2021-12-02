@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Talerock
@@ -32,14 +33,17 @@ namespace Talerock
 
         public void CreateNextLevel()
         {
+            ClearLevel();
+            
             if (_nextLevelNumber > levelsSettings.Count)
                 return;
 
             var levelsSetting = levelsSettings[_nextLevelNumber];
-
             var optionsColors = levelsSetting.OptionsColors;
-
             var optionsContainer = Environment.Instance.OptionsContainer;
+            var timer = Environment.Instance.Timer;
+            
+            timer.SetTimerValues(levelsSetting.TimeForCheck, levelsSetting.TimeForAnswer);
 
             foreach (var optionColor in optionsColors)
             {
@@ -61,6 +65,26 @@ namespace Talerock
             }
 
             _nextLevelNumber++;
+
+            var resultChecker = Environment.Instance.ResultChecker;
+            resultChecker.SetCells(_instantiatedCells.ToList());
+
+            CurrentPhase.Phase = Phases.Check;
+            
+            timer.StartTimer();
+        }
+
+        private void ClearLevel()
+        {
+            foreach (var instantiatedCell in _instantiatedCells)
+                Destroy(instantiatedCell.gameObject);
+            
+            _instantiatedCells.Clear();
+
+            foreach (var instantiatedOption in _instantiatedOptions)
+                Destroy(instantiatedOption.gameObject);
+            
+            _instantiatedOptions.Clear();
         }
     }
 }

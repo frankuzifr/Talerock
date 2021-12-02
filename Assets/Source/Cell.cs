@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Talerock
@@ -7,11 +8,20 @@ namespace Talerock
     {
         [SerializeField] private Image cellImage;
         [SerializeField] private Color defaultColor = Color.gray;
-        
+
         private Option _option;
 
         private Color _rightColor;
         private Color _currentColor;
+
+        private void Awake()
+        {
+            CurrentPhase.OnPhaseChanged += () =>
+            {
+                if (CurrentPhase.Phase == Phases.Answer)
+                    SetDefaultColor();
+            };
+        }
 
         public void SetRightColor(Color color)
         {
@@ -28,17 +38,24 @@ namespace Talerock
         {
             _option = option;
             _currentColor = option.GetOptionColor();
+            var resultChecker = Environment.Instance.ResultChecker;
+            resultChecker.IncreaseCountReadiesCells();
         }
 
         public void RemoveOption()
         {
             _option = null;
             _currentColor = Color.clear;
+            var resultChecker = Environment.Instance.ResultChecker;
+            resultChecker.DecreaseCountReadiesCells();
         }
 
         public bool IsRightCombination()
         {
-            return _rightColor == _currentColor;
+            return Math.Abs(_rightColor.r - _currentColor.r) < 0.01 && 
+                   Math.Abs(_rightColor.g - _currentColor.g) < 0.01 && 
+                   Math.Abs(_rightColor.b - _currentColor.b) < 0.01 &&
+                   Math.Abs(_rightColor.a - _currentColor.a) < 0.01;
         }
     }
 }

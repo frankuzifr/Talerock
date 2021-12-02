@@ -12,6 +12,16 @@ namespace Talerock
 
         private Cell _cell;
 
+        private void Awake()
+        {
+            
+        }
+
+        private void OnDestroy()
+        {
+            
+        }
+
         public void SetOptionColor(Color color)
         {
             optionImage.color = color;
@@ -51,12 +61,15 @@ namespace Talerock
 
             if (eventDataPointerEnter && eventDataPointerEnter.TryGetComponent<Cell>(out var cell))
             {
-                transform.position = cell.transform.position;
-                cell.SetOption(this);
-
+                var resultChecker = Environment.Instance.ResultChecker;
+                resultChecker.OnWrongCombination += ResetOption;
+                
                 transform.SetParent(cell.transform);
                 optionsContainer.RemoveOptionFromContainer(this);
+                
+                transform.position = cell.transform.position;
                 _cell = cell;
+                cell.SetOption(this);
             }
             else if (eventDataPointerEnter && eventDataPointerEnter.TryGetComponent<OptionRemover>(out _))
             {
@@ -66,21 +79,23 @@ namespace Talerock
             else
             {
                 if (_cell)
-                {
-                    optionsContainer.AddOptionToContainer(this);
-                    transform.SetParent(optionsContainer.transform);
-                }
+                    ResetOption();
                 else
-                {
                     transform.position = _optionPosition;
-                }
             }
 
             optionImage.raycastTarget = true;
         }
 
-        public void ClearCell()
+        private void ResetOption()
         {
+            var resultChecker = Environment.Instance.ResultChecker;
+            resultChecker.OnWrongCombination -= ResetOption;
+            
+            var optionsContainer = Environment.Instance.OptionsContainer;
+            transform.SetParent(optionsContainer.transform);
+            optionsContainer.AddOptionToContainer(this);
+            _cell.RemoveOption();
             _cell = null;
         }
     }

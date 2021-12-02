@@ -1,0 +1,8 @@
+﻿namespace Talerock
+{
+    public enum Phases
+    {
+        Answer,
+        Check,
+    }
+}

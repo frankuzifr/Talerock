@@ -10,21 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21dcde5813d74748815b0b968fa4e885, type: 3}
-  m_Name: Level_1
+  m_Name: Level_2
   m_EditorClassIdentifier: 
-  timeForCheck: 7
-  timeForAnswer: 15
-  pointsForRightAnswer: 10
+  timeForCheck: 6
+  timeForAnswer: 25
+  pointsForRightAnswer: 15
   combinationColors:
+  - {r: 0, g: 1, b: 0.9301295, a: 1}
+  - {r: 0, g: 0.049153805, b: 1, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0.15496778, g: 1, b: 0, a: 1}
-  - {r: 0, g: 0.049153805, b: 1, a: 1}
+  - {r: 1, g: 0.98475426, b: 0, a: 1}
   optionsColors:
+  - {r: 0.8352941, g: 1, b: 0.7019608, a: 1}
+  - {r: 1, g: 0.023584902, b: 0.5453336, a: 1}
+  - {r: 0, g: 1, b: 0.92941177, a: 1}
+  - {r: 1, g: 0.9843137, b: 0, a: 1}
+  - {r: 0, g: 0.050980393, b: 1, a: 1}
+  - {r: 0.15686275, g: 1, b: 0, a: 1}
+  - {r: 0.32269463, g: 0.19108224, b: 0.3584906, a: 1}
+  - {r: 1, g: 0.08018869, b: 0.95004433, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 1, b: 0.92941177, a: 1}
-  - {r: 1, g: 0.078431375, b: 0.9490196, a: 1}
-  - {r: 1, g: 0.9843137, b: 0, a: 1}
-  - {r: 0.15686275, g: 1, b: 0, a: 1}
-  - {r: 0.4666667, g: 0, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0.92941177, a: 1}
-  - {r: 0, g: 0.050980393, b: 1, a: 1}

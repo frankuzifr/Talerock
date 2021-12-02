@@ -33,7 +33,7 @@ namespace Talerock
             var optionWidth = optionRect.width;
             
             _currentOptionsWidth += _optionsOffset + optionWidth;
-
+            
             if (_currentOptionsWidth > _containerParentRectTransform.rect.width)
             {
                 option.gameObject.SetActive(false);
@@ -66,12 +66,12 @@ namespace Talerock
 
         public void ClearContainer()
         {
-            _optionsInContainer.Clear();
-        }
-
-        public void RefreshOptions()
-        {
+            foreach (var option in _optionsInContainer)
+                Destroy(option.gameObject);
             
+            _optionsInContainer.Clear();
+            _currentOptionsWidth = 0;
+            _countVisibleOptionInContainer = 0;
         }
     }
 }

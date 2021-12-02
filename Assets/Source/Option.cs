@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -8,18 +9,15 @@ namespace Talerock
     {
         [SerializeField] private Image optionImage;
 
+        private Canvas _canvas;
+
         private Vector3 _optionPosition;
 
         private Cell _cell;
 
         private void Awake()
         {
-            
-        }
-
-        private void OnDestroy()
-        {
-            
+            _canvas = GetComponentInParent<Canvas>();
         }
 
         public void SetOptionColor(Color color)
@@ -36,6 +34,9 @@ namespace Talerock
         {
             if (CurrentPhase.Phase == Phases.Check)
                 return;
+
+            if (_cell)
+                transform.SetParent(_canvas.transform);
 
             _optionPosition = transform.position;
 
@@ -63,11 +64,17 @@ namespace Talerock
             {
                 var resultChecker = Environment.Instance.ResultChecker;
                 resultChecker.OnWrongCombination += ResetOption;
-                
+
                 transform.SetParent(cell.transform);
-                optionsContainer.RemoveOptionFromContainer(this);
                 
                 transform.position = cell.transform.position;
+                
+                if (!_cell)
+                    optionsContainer.RemoveOptionFromContainer(this);
+
+                if (_cell)
+                    _cell.RemoveOption();
+
                 _cell = cell;
                 cell.SetOption(this);
             }
@@ -91,12 +98,18 @@ namespace Talerock
         {
             var resultChecker = Environment.Instance.ResultChecker;
             resultChecker.OnWrongCombination -= ResetOption;
-            
+
             var optionsContainer = Environment.Instance.OptionsContainer;
             transform.SetParent(optionsContainer.transform);
             optionsContainer.AddOptionToContainer(this);
             _cell.RemoveOption();
             _cell = null;
+        }
+
+        private void OnDestroy()
+        {
+            var resultChecker = Environment.Instance.ResultChecker;
+            resultChecker.OnWrongCombination -= ResetOption;
         }
     }
 }

@@ -6,6 +6,8 @@ namespace Talerock
 {
     public class Timer : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI titleLabel;
+        
         private TMP_Text _timerLabel;
         
         private float _checkTime;
@@ -28,6 +30,7 @@ namespace Talerock
                 _checkTime -= Time.deltaTime;
 
                 _timerLabel.text = $"Время для запоминания: {Math.Round(_checkTime, 2)}";
+                titleLabel.text = "Запомните цвета";
                 
                 if (_checkTime > 0)
                     return;
@@ -40,13 +43,13 @@ namespace Talerock
                 _answerTime -= Time.deltaTime;
                 
                 _timerLabel.text = $"Время для ответа: {Math.Round(_answerTime, 2)}";
+                titleLabel.text = "Заполните ячеики нужными цветами";
                 
                 if (_answerTime > 0)
                     return;
 
-                Debug.Log("Lose");
                 _isTimerWork = false;
-                CurrentPhase.Phase = Phases.Check;
+                CurrentPhase.Phase = Phases.EndGame;
             }
         }
 

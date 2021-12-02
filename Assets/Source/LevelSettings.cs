@@ -10,6 +10,9 @@ namespace Talerock
         [SerializeField] private float timeForCheck;
         [SerializeField] private float timeForAnswer;
 
+        [Header("Points for right answer")]
+        [SerializeField] private int pointsForRightAnswer;
+
         [Header("Color combination")] 
         [SerializeField] private List<Color> combinationColors;
 
@@ -20,5 +23,6 @@ namespace Talerock
         public float TimeForAnswer => timeForAnswer;
         public List<Color> CombinationColors => combinationColors;
         public List<Color> OptionsColors => optionsColors;
+        public int PointsForRightAnswer => pointsForRightAnswer;
     }
 }

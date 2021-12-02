@@ -4,5 +4,7 @@
     {
         Answer,
         Check,
+        EndLevel,
+        EndGame
     }
 }

@@ -19,24 +19,34 @@ namespace Talerock
         [SerializeField] private Transform cellsContainerTransform;
         [SerializeField] private Transform optionsContainerTransform;
 
-        private List<Option> _instantiatedOptions;
         private List<Cell> _instantiatedCells;
-        
+
+        private ResultChecker _resultChecker;
+
         private int _nextLevelNumber;
 
         private void Awake()
         {
-            _instantiatedOptions = new List<Option>();
+            CurrentPhase.OnPhaseChanged += () =>
+            {
+                if (CurrentPhase.Phase == Phases.EndGame)
+                    _nextLevelNumber = 0;
+            };
+            
             _instantiatedCells = new List<Cell>();
-            CreateNextLevel();
+
+            _resultChecker = Environment.Instance.ResultChecker;
+
+            _resultChecker.OnNextLevel += CreateNextLevel;
+            //CreateNextLevel();
         }
 
         public void CreateNextLevel()
         {
             ClearLevel();
             
-            if (_nextLevelNumber > levelsSettings.Count)
-                return;
+            if (_nextLevelNumber == levelsSettings.Count - 1)
+                _resultChecker.SetLastLevelOnTrue();    
 
             var levelsSetting = levelsSettings[_nextLevelNumber];
             var optionsColors = levelsSetting.OptionsColors;
@@ -51,7 +61,6 @@ namespace Talerock
                 option.SetOptionColor(optionColor);
                 
                 optionsContainer.AddOptionToContainer(option);
-                _instantiatedOptions.Add(option);
             }
 
             var combinationsColors = levelsSetting.CombinationColors;
@@ -65,9 +74,9 @@ namespace Talerock
             }
 
             _nextLevelNumber++;
-
-            var resultChecker = Environment.Instance.ResultChecker;
-            resultChecker.SetCells(_instantiatedCells.ToList());
+            
+            _resultChecker.SetCells(_instantiatedCells.ToList());
+            _resultChecker.SetPointsForRightAnswer(levelsSetting.PointsForRightAnswer);
 
             CurrentPhase.Phase = Phases.Check;
             
@@ -81,10 +90,13 @@ namespace Talerock
             
             _instantiatedCells.Clear();
 
-            foreach (var instantiatedOption in _instantiatedOptions)
-                Destroy(instantiatedOption.gameObject);
-            
-            _instantiatedOptions.Clear();
+            var optionsContainer = Environment.Instance.OptionsContainer;
+            optionsContainer.ClearContainer();
+        }
+
+        private void OnDestroy()
+        {
+            _resultChecker.OnNextLevel -= CreateNextLevel;
         }
     }
 }

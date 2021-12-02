@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21dcde5813d74748815b0b968fa4e885, type: 3}
+  m_Name: Level_1
+  m_EditorClassIdentifier: 
+  timeForCheck: 0
+  timeForAnswer: 0
+  combinationColors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.15496778, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0.049153805, b: 1, a: 1}
+  - {r: 1, g: 0.98475426, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.9301295, a: 1}
+  optionsColors:
+  - {r: 1, g: 0.0047169924, b: 0.0047169924, a: 1}
+  - {r: 0.15686275, g: 1, b: 0, a: 1}
+  - {r: 0.46625423, g: 0, b: 1, a: 1}
+  - {r: 0.148332, g: 1, b: 0, a: 1}
+  - {r: 0.6290765, g: 0.764151, b: 0, a: 1}
+  - {r: 0.4666667, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0.92941177, a: 1}
+  - {r: 1, g: 0.08018869, b: 0.95004433, a: 1}
+  - {r: 0.31132078, g: 0.22284307, b: 0, a: 1}
+  - {r: 0.83451265, g: 1, b: 0.7028302, a: 1}
+  - {r: 0, g: 0.050980393, b: 1, a: 1}
+  - {r: 1, g: 0.15566039, b: 0.15566039, a: 1}
+  - {r: 0.5377358, g: 0.35162523, b: 0, a: 1}
+  - {r: 0.4059708, g: 0, b: 0.41509432, a: 1}
+  - {r: 1, g: 0.9843137, b: 0, a: 1}
+  - {r: 0.20028123, g: 0.03991634, b: 0.21698111, a: 1}
+  - {r: 0, g: 1, b: 0.24129272, a: 1}
+  - {r: 0.4731631, g: 0.754717, b: 0, a: 1}
+  - {r: 0.9245283, g: 0.2660199, b: 0.45836547, a: 1}
+  - {r: 0.04469482, g: 0.036311854, b: 0.1509434, a: 1}

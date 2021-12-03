@@ -94,6 +94,11 @@ namespace Talerock
         private void OnDestroy()
         {
             _resultChecker.OnNextLevel -= CreateNextLevel;
+            CurrentPhase.OnPhaseChanged -= () =>
+            {
+                if (CurrentPhase.Phase == Phases.EndGame)
+                    _nextLevelNumber = 0;
+            };
         }
     }
 }

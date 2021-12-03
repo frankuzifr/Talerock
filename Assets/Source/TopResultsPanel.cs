@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using TMPro;
@@ -31,7 +32,7 @@ namespace Talerock
 
             _instantiatedResults = new List<TextMeshProUGUI>();
             _resultModules = new List<ResultModule>();
-            topLabel.text = $"Топ {countTopResults} результатов:";
+            topLabel.text = $"Топ {countTopResults} результат{GetCorrectWordEnding(countTopResults)}:";
 
             LoadResults();
         }
@@ -47,6 +48,8 @@ namespace Talerock
             _resultModules.Add(resultModule);
 
             SortModules();
+            
+            CropResultModules();
 
             using var fileStream = File.CreateText(Application.persistentDataPath + FileName);
             {
@@ -55,6 +58,18 @@ namespace Talerock
             }
 
             InstantiateResultLabels();
+        }
+        
+        private static string GetCorrectWordEnding(int count)
+        {
+            var number = Math.Abs(count) % 100;
+            if (number % 10 == 0 || number % 10 >= 5 && number % 10 <= 9 || number > 9 && number < 20)
+                return "ов";
+
+            if (number % 10 == 1)
+                return "";
+
+            return "а";
         }
 
         private void LoadResults()
@@ -69,6 +84,8 @@ namespace Talerock
                 return;
 
             _resultModules.AddRange(resultModules);
+            
+            CropResultModules();
 
             InstantiateResultLabels();
         }
@@ -104,7 +121,10 @@ namespace Talerock
                     _resultModules[j + 1] = currentModule;
                 }
             }
-            
+        }
+
+        private void CropResultModules()
+        {
             if (_resultModules.Count > countTopResults)
                 _resultModules.RemoveRange(countTopResults, _resultModules.Count - countTopResults);
         }

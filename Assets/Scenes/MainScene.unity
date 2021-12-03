@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
@@ -545,7 +545,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 100
     m_Bottom: 0
-  m_ChildAlignment: 1
+  m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 1
   m_CellSize: {x: 100, y: 100}
@@ -732,7 +732,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5188679, g: 0.15535448, b: 0.11992703, a: 0}
+  m_BackGroundColor: {r: 0.42745098, g: 0.23921569, b: 0.22745098, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -891,8 +891,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -175}
-  m_SizeDelta: {x: 0, y: -650}
+  m_AnchoredPosition: {x: 0, y: -50.000122}
+  m_SizeDelta: {x: 0, y: -400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1709398334
 GameObject:
@@ -1158,7 +1158,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 500}
+  m_SizeDelta: {x: 0, y: 250}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &2144520616
 GameObject:
@@ -1216,7 +1216,7 @@ MonoBehaviour:
     12,25"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81782abcf61238e46badf63a63493ed3, type: 2}
-  m_sharedMaterial: {fileID: 2184724098893863596, guid: 81782abcf61238e46badf63a63493ed3, type: 2}
+  m_sharedMaterial: {fileID: 5475913858389449255, guid: 81782abcf61238e46badf63a63493ed3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1569,10 +1569,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2904438026304877870, guid: f4af7190150a5924f845326e4c445505, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4060762574125913114, guid: f4af7190150a5924f845326e4c445505, type: 3}
       propertyPath: levelCreator
       value: 
@@ -1580,14 +1576,6 @@ PrefabInstance:
     - target: {fileID: 7292607593849975331, guid: f4af7190150a5924f845326e4c445505, type: 3}
       propertyPath: m_Name
       value: TopResultsPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292607593849975331, guid: f4af7190150a5924f845326e4c445505, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878508491841482201, guid: f4af7190150a5924f845326e4c445505, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4af7190150a5924f845326e4c445505, type: 3}
@@ -1783,25 +1771,9 @@ PrefabInstance:
       propertyPath: topResultsPanel
       value: 
       objectReference: {fileID: 141023439}
-    - target: {fileID: 3519161776018605061, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 84.38
-      objectReference: {fileID: 0}
     - target: {fileID: 5557573858210707914, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
       propertyPath: m_Name
       value: EndGamePanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 5557573858210707914, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6485017866143059407, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 111.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 7245598927661780551, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 71.51
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
@@ -1877,7 +1849,7 @@ MonoBehaviour:
   m_text: "\u0417\u0430\u043F\u043E\u043C\u043D\u0438\u0442\u0435 \u0446\u0432\u0435\u0442\u0430"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81782abcf61238e46badf63a63493ed3, type: 2}
-  m_sharedMaterial: {fileID: 2184724098893863596, guid: 81782abcf61238e46badf63a63493ed3, type: 2}
+  m_sharedMaterial: {fileID: 5475913858389449255, guid: 81782abcf61238e46badf63a63493ed3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

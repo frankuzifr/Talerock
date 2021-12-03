@@ -4,6 +4,5 @@ namespace Talerock
 {
     public class OptionRemover : MonoBehaviour
     {
-        
     }
 }

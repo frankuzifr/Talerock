@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -10,10 +9,9 @@ namespace Talerock
         [SerializeField] private Image optionImage;
 
         private Canvas _canvas;
+        private Cell _cell;
 
         private Vector3 _optionPosition;
-
-        private Cell _cell;
 
         private void Awake()
         {
@@ -32,7 +30,7 @@ namespace Talerock
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (CurrentPhase.Phase == Phases.Check)
+            if (CurrentPhase.Phase != Phases.Answer)
                 return;
 
             if (_cell)
@@ -45,7 +43,7 @@ namespace Talerock
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (CurrentPhase.Phase == Phases.Check)
+            if (CurrentPhase.Phase != Phases.Answer)
                 return;
 
             var mousePosition = Input.mousePosition;
@@ -54,7 +52,7 @@ namespace Talerock
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (CurrentPhase.Phase == Phases.Check)
+            if (CurrentPhase.Phase != Phases.Answer)
                 return;
 
             var eventDataPointerEnter = eventData.pointerEnter;
@@ -65,9 +63,10 @@ namespace Talerock
                 var resultChecker = Environment.Instance.ResultChecker;
                 resultChecker.OnWrongCombination += ResetOption;
 
-                transform.SetParent(cell.transform);
+                var optionTransform = transform;
                 
-                transform.position = cell.transform.position;
+                optionTransform.SetParent(cell.transform);
+                optionTransform.position = cell.transform.position;
                 
                 if (!_cell)
                     optionsContainer.RemoveOptionFromContainer(this);

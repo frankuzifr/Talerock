@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using TMPro;
@@ -48,9 +47,6 @@ namespace Talerock
             _resultModules.Add(resultModule);
 
             SortModules();
-
-            // if (!File.Exists(Application.persistentDataPath + FileName))
-            //     return;
 
             using var fileStream = File.CreateText(Application.persistentDataPath + FileName);
             {
@@ -114,7 +110,6 @@ namespace Talerock
         }
     }
 
-    [Serializable]
     public struct ResultModule
     {
         public string UserName;

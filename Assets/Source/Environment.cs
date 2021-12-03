@@ -13,8 +13,7 @@ namespace Talerock
         public OptionsContainer OptionsContainer => optionsContainer;
         public Timer Timer => timer;
         public ResultChecker ResultChecker => resultChecker;
-
-
+        
         private void Awake()
         {
             if (!Instance)

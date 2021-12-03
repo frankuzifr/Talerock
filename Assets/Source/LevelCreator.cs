@@ -6,8 +6,6 @@ namespace Talerock
 {
     public class LevelCreator : MonoBehaviour
     {
-        [Header("External dependencies")] 
-        
         [Header("Levels settings")]
         [SerializeField] private List<LevelSettings> levelsSettings;
 
@@ -38,7 +36,6 @@ namespace Talerock
             _resultChecker = Environment.Instance.ResultChecker;
 
             _resultChecker.OnNextLevel += CreateNextLevel;
-            //CreateNextLevel();
         }
 
         public void CreateNextLevel()

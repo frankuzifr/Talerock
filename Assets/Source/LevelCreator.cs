@@ -18,8 +18,10 @@ namespace Talerock
         [SerializeField] private Transform optionsContainerTransform;
 
         private List<Cell> _instantiatedCells;
+        private List<Option> _instantiatedOptions;
 
         private ResultChecker _resultChecker;
+        private OptionsContainer _optionsContainer;
 
         private int _nextLevelNumber;
 
@@ -32,42 +34,46 @@ namespace Talerock
             };
             
             _instantiatedCells = new List<Cell>();
+            _instantiatedOptions = new List<Option>();
 
             _resultChecker = Environment.Instance.ResultChecker;
+            _optionsContainer = Environment.Instance.OptionsContainer;
 
             _resultChecker.OnNextLevel += CreateNextLevel;
         }
 
-        public void CreateNextLevel()
+        public void StartNewGame()
         {
-            ClearLevel();
-            
+            _nextLevelNumber = 0;
+            CreateNextLevel();
+        }
+
+        private void CreateNextLevel()
+        {
             if (_nextLevelNumber == levelsSettings.Count - 1)
-                _resultChecker.SetLastLevelOnTrue();    
+                _resultChecker.SetLastLevelOnTrue();
 
             var levelsSetting = levelsSettings[_nextLevelNumber];
-            var optionsColors = levelsSetting.OptionsColors;
-            var optionsContainer = Environment.Instance.OptionsContainer;
             var timer = Environment.Instance.Timer;
-            
+
             timer.SetTimerValues(levelsSetting.TimeForCheck, levelsSetting.TimeForAnswer);
 
-            foreach (var optionColor in optionsColors)
+            var optionsColors = levelsSetting.OptionsColors;
+            RefreshOptions(optionsColors.Count);
+
+            var optionsInContainer = _optionsContainer.GetOptions();
+
+            for (var i = 0; i < optionsColors.Count; i++)
             {
-                var option = Instantiate(optionPrefab, optionsContainerTransform);
-                option.SetOptionColor(optionColor);
-                
-                optionsContainer.AddOptionToContainer(option);
+                optionsInContainer[i].SetOptionColor(optionsColors[i]);
             }
-
+            
             var combinationsColors = levelsSetting.CombinationColors;
+            RefreshCells(combinationsColors.Count);
 
-            foreach (var combinationColor in combinationsColors)
+            for (var i = 0; i < combinationsColors.Count; i++)
             {
-                var cell = Instantiate(cellPrefab, cellsContainerTransform);
-                cell.SetRightColor(combinationColor);
-                
-                _instantiatedCells.Add(cell);
+                _instantiatedCells[i].SetRightColor(combinationsColors[i]);
             }
 
             _nextLevelNumber++;
@@ -80,15 +86,65 @@ namespace Talerock
             timer.StartTimer();
         }
 
-        private void ClearLevel()
+        private void RefreshOptions(int countOptions)
+        {
+            foreach (var instantiatedOption in _instantiatedOptions)
+            {
+                instantiatedOption.EnableOption();
+                instantiatedOption.ResetOptionPosition();
+            }
+            
+            var optionsInContainer = _optionsContainer.GetOptions();
+            var optionsDifference = countOptions - optionsInContainer.Length;
+            
+            if (optionsDifference > 0)
+            {
+                for (var i = 0; i < optionsDifference; i++)
+                {
+                    var option = Instantiate(optionPrefab, optionsContainerTransform);
+                    _instantiatedOptions.Add(option);
+                    _optionsContainer.AddOptionToContainer(option);
+                }
+            }
+
+            if (optionsDifference < 0)
+            {
+                for (var i = 0; i > optionsDifference; i--)
+                {
+                    var instantiatedOptionsCount = _instantiatedOptions.Count;
+                    _instantiatedOptions.RemoveAt(instantiatedOptionsCount - 1);
+                    _optionsContainer.RemoveLastOption();
+                }
+            }
+            
+            _optionsContainer.RefreshContainer();
+        }
+
+        private void RefreshCells(int countCells)
         {
             foreach (var instantiatedCell in _instantiatedCells)
-                Destroy(instantiatedCell.gameObject);
+                instantiatedCell.RemoveOption();
             
-            _instantiatedCells.Clear();
+            var cellsDifference = countCells - _instantiatedCells.Count;
+            if (cellsDifference > 0)
+            {
+                for (var i = 0; i < cellsDifference; i++)
+                {
+                    var cell = Instantiate(cellPrefab, cellsContainerTransform);
+                    _instantiatedCells.Add(cell);
+                }
+            }
 
-            var optionsContainer = Environment.Instance.OptionsContainer;
-            optionsContainer.ClearContainer();
+            if (cellsDifference < 0)
+            {
+                for (var i = 0; i > cellsDifference; i--)
+                {
+                    var instantiatedCellsCount = _instantiatedCells.Count;
+                    var instantiatedCell = _instantiatedCells[instantiatedCellsCount - 1];
+                    Destroy(instantiatedCell.gameObject);
+                    _instantiatedCells.RemoveAt(instantiatedCellsCount - 1);
+                }
+            }
         }
 
         private void OnDestroy()

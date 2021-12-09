@@ -14,7 +14,7 @@ namespace Talerock
             set
             {
                 _phase = value;
-                OnPhaseChanged.Invoke();
+                OnPhaseChanged?.Invoke();
             }
         }
     }

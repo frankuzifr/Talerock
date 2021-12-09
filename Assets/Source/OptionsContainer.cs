@@ -27,21 +27,48 @@ namespace Talerock
         public void AddOptionToContainer(Option option)
         {
             _optionsInContainer.Add(option);
-
+            
             var optionRectTransform = option.GetComponent<RectTransform>();
             var optionRect = optionRectTransform.rect;
             var optionWidth = optionRect.width;
-            
+
             _currentOptionsWidth += _optionsOffset + optionWidth;
-            
+                
             if (_currentOptionsWidth > _containerParentRectTransform.rect.width)
             {
                 option.gameObject.SetActive(false);
             }
             else
             {
+                option.gameObject.SetActive(true);
                 _containerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _currentOptionsWidth);
                 _countVisibleOptionInContainer++;
+            }
+        }
+
+        public void RefreshContainer()
+        {
+            _currentOptionsWidth = 0f;
+            _countVisibleOptionInContainer = 0;
+
+            foreach (var option in _optionsInContainer)
+            {
+                var optionRectTransform = option.GetComponent<RectTransform>();
+                var optionRect = optionRectTransform.rect;
+                var optionWidth = optionRect.width;
+                
+                _currentOptionsWidth += _optionsOffset + optionWidth;
+                
+                if (_currentOptionsWidth > _containerParentRectTransform.rect.width)
+                {
+                    option.gameObject.SetActive(false);
+                }
+                else
+                {
+                    option.gameObject.SetActive(true);
+                    _containerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _currentOptionsWidth);
+                    _countVisibleOptionInContainer++;
+                }
             }
         }
 
@@ -64,14 +91,17 @@ namespace Talerock
             }
         }
 
-        public void ClearContainer()
+        public void RemoveLastOption()
         {
-            foreach (var option in _optionsInContainer)
-                Destroy(option.gameObject);
-            
-            _optionsInContainer.Clear();
-            _currentOptionsWidth = 0;
-            _countVisibleOptionInContainer = 0;
+            var count = _optionsInContainer.Count;
+            var option = _optionsInContainer[count - 1];
+            Destroy(option.gameObject);
+            _optionsInContainer.RemoveAt(count - 1);
+        }
+
+        public Option[] GetOptions()
+        {
+            return _optionsInContainer.ToArray();
         }
     }
 }

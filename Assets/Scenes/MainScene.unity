@@ -1793,19 +1793,23 @@ PrefabInstance:
       objectReference: {fileID: 141023439}
     - target: {fileID: 3519161776018605061, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 84.38
       objectReference: {fileID: 0}
     - target: {fileID: 5557573858210707914, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
       propertyPath: m_Name
       value: EndGamePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 5557573858210707914, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6485017866143059407, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 117.19
       objectReference: {fileID: 0}
     - target: {fileID: 7245598927661780551, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 75.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd9346e10de42a459f592020a8fdbb5, type: 3}

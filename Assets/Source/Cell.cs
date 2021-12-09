@@ -53,5 +53,14 @@ namespace Talerock
         {
             cellImage.color = defaultColor;
         }
+
+        private void OnDestroy()
+        {
+            CurrentPhase.OnPhaseChanged -= () =>
+            {
+                if (CurrentPhase.Phase == Phases.Answer)
+                    SetDefaultColor();
+            };
+        }
     }
 }

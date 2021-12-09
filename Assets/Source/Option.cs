@@ -10,12 +10,16 @@ namespace Talerock
 
         private Canvas _canvas;
         private Cell _cell;
+        private OptionsContainer _optionsContainer;
 
         private Vector3 _optionPosition;
+
+        private bool _isRemoved;
 
         private void Awake()
         {
             _canvas = GetComponentInParent<Canvas>();
+            _optionsContainer = Environment.Instance.OptionsContainer;
         }
 
         public void SetOptionColor(Color color)
@@ -56,53 +60,91 @@ namespace Talerock
                 return;
 
             var eventDataPointerEnter = eventData.pointerEnter;
-            var optionsContainer = Environment.Instance.OptionsContainer;
-
-            if (eventDataPointerEnter && eventDataPointerEnter.TryGetComponent<Cell>(out var cell))
-            {
-                var resultChecker = Environment.Instance.ResultChecker;
-                resultChecker.OnWrongCombination += ResetOption;
-
-                var optionTransform = transform;
-                
-                optionTransform.SetParent(cell.transform);
-                optionTransform.position = cell.transform.position;
-                
-                if (!_cell)
-                    optionsContainer.RemoveOptionFromContainer(this);
-
-                if (_cell)
-                    _cell.RemoveOption();
-
-                _cell = cell;
-                cell.SetOption(this);
-            }
-            else if (eventDataPointerEnter && eventDataPointerEnter.TryGetComponent<OptionRemover>(out _))
-            {
-                optionsContainer.RemoveOptionFromContainer(this);
-                Destroy(gameObject);
-            }
-            else
-            {
-                if (_cell)
-                    ResetOption();
-                else
-                    transform.position = _optionPosition;
-            }
 
             optionImage.raycastTarget = true;
+            
+            if (TrySetOptionToCell(eventDataPointerEnter))
+                return;
+            
+            if (TrySetOptionToRemover(eventDataPointerEnter))
+                return;
+            
+            if (_cell)
+                    ResetOption();
+            else
+                transform.position = _optionPosition;
+        }
+
+        public void EnableOption()
+        {
+            if (!_isRemoved)
+                return;
+            
+            gameObject.SetActive(true);
+            _optionsContainer.AddOptionToContainer(this);
+            _isRemoved = false;
+        }
+        
+        public void ResetOptionPosition()
+        {
+            if (!_cell)
+                return;
+
+            _cell = null;
+            transform.SetParent(_optionsContainer.transform);
+            _optionsContainer.AddOptionToContainer(this);
+            var resultChecker = Environment.Instance.ResultChecker;
+            resultChecker.OnWrongCombination -= ResetOption;
+        }
+
+        private bool TrySetOptionToCell(GameObject eventDataPointerEnter)
+        {
+            if (!eventDataPointerEnter)
+                return false;
+            
+            if (!eventDataPointerEnter.TryGetComponent<Cell>(out var cell)) 
+                return false;
+            
+            var resultChecker = Environment.Instance.ResultChecker;
+            resultChecker.OnWrongCombination += ResetOption;
+
+            var optionTransform = transform;
+                
+            optionTransform.SetParent(cell.transform);
+            optionTransform.position = cell.transform.position;
+                
+            if (!_cell)
+                _optionsContainer.RemoveOptionFromContainer(this);
+
+            if (_cell)
+                _cell.RemoveOption();
+
+            _cell = cell;
+            cell.SetOption(this);
+
+            return true;
+        }
+
+        private bool TrySetOptionToRemover(GameObject eventDataPointerEnter)
+        {
+            if (!eventDataPointerEnter) 
+                return false;
+            
+            if (!eventDataPointerEnter.TryGetComponent<OptionRemover>(out _)) 
+                return false;
+            
+            gameObject.SetActive(false);
+            _optionsContainer.RemoveOptionFromContainer(this);
+            transform.SetAsLastSibling();
+            _isRemoved = true;
+
+            return true;
         }
 
         private void ResetOption()
         {
-            var resultChecker = Environment.Instance.ResultChecker;
-            resultChecker.OnWrongCombination -= ResetOption;
-
-            var optionsContainer = Environment.Instance.OptionsContainer;
-            transform.SetParent(optionsContainer.transform);
-            optionsContainer.AddOptionToContainer(this);
             _cell.RemoveOption();
-            _cell = null;
+            ResetOptionPosition();
         }
 
         private void OnDestroy()

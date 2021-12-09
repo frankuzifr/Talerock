@@ -27,7 +27,7 @@ namespace Talerock
             startNewGame.onClick.AddListener(() =>
             {
                 gameObject.SetActive(false);
-                levelCreator.CreateNextLevel();
+                levelCreator.StartNewGame();
             });
 
             _instantiatedResults = new List<TextMeshProUGUI>();

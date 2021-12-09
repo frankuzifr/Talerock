@@ -18,7 +18,9 @@ namespace Talerock
         [SerializeField] private Transform optionsContainerTransform;
 
         private List<Cell> _instantiatedCells;
+        private List<Cell> _removedCells;
         private List<Option> _instantiatedOptions;
+        private List<Option> _removedOptions;
 
         private ResultChecker _resultChecker;
         private OptionsContainer _optionsContainer;
@@ -35,6 +37,9 @@ namespace Talerock
             
             _instantiatedCells = new List<Cell>();
             _instantiatedOptions = new List<Option>();
+
+            _removedCells = new List<Cell>();
+            _removedOptions = new List<Option>();
 
             _resultChecker = Environment.Instance.ResultChecker;
             _optionsContainer = Environment.Instance.OptionsContainer;
@@ -101,7 +106,18 @@ namespace Talerock
             {
                 for (var i = 0; i < optionsDifference; i++)
                 {
-                    var option = Instantiate(optionPrefab, optionsContainerTransform);
+                    Option option;
+                    if (_removedOptions.Count != 0)
+                    {
+                        option = _removedOptions[0];
+                        _removedOptions.RemoveAt(0);
+                        option.transform.SetParent(optionsContainerTransform);
+                    }
+                    else
+                    {
+                        option = Instantiate(optionPrefab, optionsContainerTransform);
+                    }
+
                     _instantiatedOptions.Add(option);
                     _optionsContainer.AddOptionToContainer(option);
                 }
@@ -112,7 +128,10 @@ namespace Talerock
                 for (var i = 0; i > optionsDifference; i--)
                 {
                     var instantiatedOptionsCount = _instantiatedOptions.Count;
+                    var instantiatedOption = _instantiatedOptions[instantiatedOptionsCount - 1];
+
                     _instantiatedOptions.RemoveAt(instantiatedOptionsCount - 1);
+                    _removedOptions.Add(instantiatedOption);
                     _optionsContainer.RemoveLastOption();
                 }
             }
@@ -130,7 +149,19 @@ namespace Talerock
             {
                 for (var i = 0; i < cellsDifference; i++)
                 {
-                    var cell = Instantiate(cellPrefab, cellsContainerTransform);
+                    Cell cell;
+                    if (_removedCells.Count != 0)
+                    {
+                        cell = _removedCells[0];
+                        _removedCells.RemoveAt(0);
+                        cell.transform.SetParent(cellsContainerTransform);
+                        cell.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        cell = Instantiate(cellPrefab, cellsContainerTransform);
+                    }
+
                     _instantiatedCells.Add(cell);
                 }
             }
@@ -139,10 +170,13 @@ namespace Talerock
             {
                 for (var i = 0; i > cellsDifference; i--)
                 {
-                    var instantiatedCellsCount = _instantiatedCells.Count;
-                    var instantiatedCell = _instantiatedCells[instantiatedCellsCount - 1];
-                    Destroy(instantiatedCell.gameObject);
-                    _instantiatedCells.RemoveAt(instantiatedCellsCount - 1);
+                    var cellsCount = _instantiatedCells.Count;
+                    var cell = _instantiatedCells[cellsCount - 1];
+                    
+                    _instantiatedCells.RemoveAt(cellsCount - 1);
+                    _removedCells.Add(cell);
+                    cell.transform.SetParent(cellsContainerTransform.parent);
+                    cell.gameObject.SetActive(false);
                 }
             }
         }

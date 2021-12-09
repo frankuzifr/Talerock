@@ -95,7 +95,9 @@ namespace Talerock
         {
             var count = _optionsInContainer.Count;
             var option = _optionsInContainer[count - 1];
-            Destroy(option.gameObject);
+            
+            option.transform.SetParent(transform.parent);
+            option.gameObject.SetActive(false);
             _optionsInContainer.RemoveAt(count - 1);
         }
 
